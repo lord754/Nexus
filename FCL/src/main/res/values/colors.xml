@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="default_theme_color">#7797CF</color>
-    <color name="default_theme_color_dark">#4E77C1</color>
+    <!-- Nexus Primary Red Accent -->
+    <color name="default_theme_color">#FF3333</color>
+    <color name="default_theme_color_dark">#CC0000</color>
+    
+    <!-- Dark Mode Overrides -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="ui_bg_color">#40F4F4F4</color>
-    <color name="right_menu_color">#80F4F4F4</color>
-    <color name="icon_background_color">#FFFFFF</color>
-    <color name="primary_text">#0E0E0E</color>
-    <!-- 原 FCLLibrary 模块颜色（模块已并入 FCL） -->
-    <color name="dialog_background">#F4F4F4</color>
+    
+    <!-- UI Backgrounds (Dark Mode) -->
+    <color name="ui_bg_color">#121212</color>
+    <color name="right_menu_color">#1E1E1E</color>
+    <color name="dialog_background">#1E1E1E</color>
+    
+    <!-- Text & Icons -->
+    <color name="icon_background_color">#121212</color> <!-- Changed to Nexus Black -->
+    <color name="primary_text">#FFFFFF</color>
 </resources>

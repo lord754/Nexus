@@ -9,7 +9,7 @@
                 android:bottomLeftRadius="8.0dip"
                 android:bottomRightRadius="8.0dip"/>
             <solid
-                android:color="@android:color/white" />
+                android:color="#FF3333" />
         </shape>
     </item>
 </ripple>

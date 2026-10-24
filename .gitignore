@@ -35,3 +35,9 @@ AGENTS.md
 /.zcode/
 .kotlin/
 .zcodeignore
+
+# Backups
+*.bak
+*.backup
+*.orig
+

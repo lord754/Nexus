@@ -8,6 +8,7 @@
                 android:topRightRadius="5.0dip"
                 android:bottomLeftRadius="5.0dip"
                 android:bottomRightRadius="5.0dip"/>
+            <solid android:color="#FF3333" />
         </shape>
     </item>
 </ripple>
