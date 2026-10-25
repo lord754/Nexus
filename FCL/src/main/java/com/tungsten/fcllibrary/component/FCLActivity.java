@@ -72,7 +72,7 @@ public class FCLActivity extends AppCompatActivity {
     }
 
     protected void applySavedNightMode() {
-        int themeMode = getSharedPreferences("launcher", MODE_PRIVATE).getInt("themeMode", 0);
+        int themeMode = getSharedPreferences("launcher", MODE_PRIVATE).getInt("themeMode", 2);
         int mode = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
         if (themeMode != 0) {
             mode = themeMode == 1 ? AppCompatDelegate.MODE_NIGHT_NO : AppCompatDelegate.MODE_NIGHT_YES;

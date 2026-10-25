@@ -117,7 +117,7 @@ object ThemeEngine {
     @JvmStatic
     fun isNightMode(context: Context): Boolean {
         val themeMode =
-            context.getSharedPreferences("launcher", Context.MODE_PRIVATE).getInt("themeMode", 0)
+            context.getSharedPreferences("launcher", Context.MODE_PRIVATE).getInt("themeMode", 2)
         if (themeMode == 1) return false
         if (themeMode == 2) return true
         return (context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES

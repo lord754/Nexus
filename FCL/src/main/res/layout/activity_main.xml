@@ -167,10 +167,10 @@
                     android:text="@string/account_state_no_account"
                     android:textSize="16sp"
                     android:textStyle="bold"
+                    android:textColor="#FFFFFF"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/avatar"
-                    app:use_theme_color="true" />
+                    app:layout_constraintTop_toBottomOf="@id/avatar" />
 
                 <com.tungsten.fcllibrary.component.view.FCLTextView
                     android:id="@+id/account_hint"
@@ -180,10 +180,10 @@
                     android:singleLine="true"
                     android:text="@string/account_state_add"
                     android:textSize="12sp"
+                    android:textColor="#FFFFFF"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/account_name"
-                    app:use_theme_color="true" />
+                    app:layout_constraintTop_toBottomOf="@id/account_name" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -224,10 +224,10 @@
                     android:singleLine="true"
                     android:textSize="14sp"
                     android:textStyle="bold"
+                    android:textColor="#FFFFFF"
                     app:layout_constraintEnd_toStartOf="@id/go_setting"
                     app:layout_constraintStart_toEndOf="@id/icon"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:use_theme_color="true"
                     tools:text="1.21.1-Forge" />
 
                 <com.tungsten.fcllibrary.component.view.FCLTextView
@@ -304,11 +304,11 @@
                     android:text="@string/launch"
                     android:textSize="16sp"
                     android:textStyle="bold"
+                    android:textColor="#FFFFFF"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/icon_start"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:use_theme_color="true" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

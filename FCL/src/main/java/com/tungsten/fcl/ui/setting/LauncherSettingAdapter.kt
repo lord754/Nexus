@@ -171,7 +171,7 @@ class LauncherSettingAdapter(
             ),
             Row.SpinnerRow(
                 R.string.settings_launcher_theme_mode, themeModeList,
-                prefs.getInt("themeMode", 0), LauncherSettingTag.SPINNER_THEME_MODE,
+                prefs.getInt("themeMode", 2), LauncherSettingTag.SPINNER_THEME_MODE,
                 R.string.settings_launcher_theme_mode_desc,
                 group = SettingGroup.Theme
             ),
