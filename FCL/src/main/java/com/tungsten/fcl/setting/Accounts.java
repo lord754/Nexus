@@ -398,6 +398,10 @@ public final class Accounts {
     }
 
     // ==== authlib-injector ====
+
+    /** Ely.by 的 authlib-injector 地址，供外置登录预设一键添加 */
+    public static final String AUTHLIB_INJECTOR_ELYBY_URL = "https://account.ely.by/api/authlib-injector";
+
     private static AuthlibInjectorArtifactProvider createAuthlibInjectorArtifactProvider() {
         String authlibinjectorLocation = FCLPath.AUTHLIB_INJECTOR_PATH;
         return new AuthlibInjectorDownloader(

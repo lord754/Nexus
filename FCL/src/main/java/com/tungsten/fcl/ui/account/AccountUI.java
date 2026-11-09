@@ -21,6 +21,7 @@ public class AccountUI extends FCLCommonUI implements View.OnClickListener {
     private LinearLayoutCompat addOfflineAccount;
     private LinearLayoutCompat addMicrosoftAccount;
     private LinearLayoutCompat addLoginServer;
+    private LinearLayoutCompat addElyBy;
 
     private RecyclerView recyclerView;
     private AccountListAdapter accountListAdapter;
@@ -36,9 +37,11 @@ public class AccountUI extends FCLCommonUI implements View.OnClickListener {
         addOfflineAccount = findViewById(R.id.offline);
         addMicrosoftAccount = findViewById(R.id.microsoft);
         addLoginServer = findViewById(R.id.add_login_server);
+        addElyBy = findViewById(R.id.elyby);
         addOfflineAccount.setOnClickListener(this);
         addMicrosoftAccount.setOnClickListener(this);
         addLoginServer.setOnClickListener(this);
+        addElyBy.setOnClickListener(this);
 
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -74,6 +77,12 @@ public class AccountUI extends FCLCommonUI implements View.OnClickListener {
         }
         if (view == addLoginServer) {
             AddAuthlibInjectorServerDialog dialog = new AddAuthlibInjectorServerDialog(getContext());
+            dialog.show();
+        }
+        if (view == addElyBy) {
+            // Ely.by 预设：直接预填其 authlib-injector 地址，确认后即可用外置登录添加账户
+            AddAuthlibInjectorServerDialog dialog =
+                    new AddAuthlibInjectorServerDialog(getContext(), Accounts.AUTHLIB_INJECTOR_ELYBY_URL);
             dialog.show();
         }
     }

@@ -58,6 +58,7 @@ class WorldListAdapter(private val context: Context) :
         binding.description.stringProperty().bind(worldListItem.subtitleProperty())
         binding.datapack.setOnClickListener { worldListItem.manageDatapacks() }
         binding.export.setOnClickListener { worldListItem.export() }
+        binding.backup.setOnClickListener { worldListItem.backup() }
         binding.copy.setOnClickListener { worldListItem.copy() }
         binding.delete.setOnClickListener { worldListItem.delete() }
     }

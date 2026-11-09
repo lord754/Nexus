@@ -420,6 +420,14 @@ public class FCLGameRepository extends DefaultGameRepository {
     }
 
     public LaunchOptions getLaunchOptions(String version, JavaVersion javaVersion, File gameDir, double scaleFactor, double cursorOffset) {
+        return getLaunchOptions(version, javaVersion, gameDir, scaleFactor, cursorOffset, null);
+    }
+
+    /**
+     * @param serverAddressOverride 本次启动专用的服务器地址（host:port），为 null 时沿用版本设置里的地址。
+     *                              服务器中心的「加入」用它直连，不写回版本设置。
+     */
+    public LaunchOptions getLaunchOptions(String version, JavaVersion javaVersion, File gameDir, double scaleFactor, double cursorOffset, String serverAddressOverride) {
         VersionSetting vs = getVersionSetting(version);
         int maxMemory = (int) (getAllocatedMemory(
                 vs.getMaxMemory() * 1024L * 1024L,
@@ -440,7 +448,7 @@ public class FCLGameRepository extends DefaultGameRepository {
                 // 口径与 JVMActivity surface 回调、GameMenu.refreshWindowsSize 一致：宽度含 cursorOffset
                 .setWidth(FCLBridge.FORCE_RESOLUTION ? FCLBridge.FORCE_RESOLUTION_WIDTH : (int) ((AndroidUtilKt.getScreenWidth() + cursorOffset) * scaleFactor))
                 .setHeight(FCLBridge.FORCE_RESOLUTION ? FCLBridge.FORCE_RESOLUTION_HEIGHT : (int) (AndroidUtilKt.getScreenHeight() * scaleFactor))
-                .setServerIp(vs.getServerIp())
+                .setServerIp(serverAddressOverride != null ? serverAddressOverride : vs.getServerIp())
                 .setVkDriverSystem(vs.isVKDriverSystem())
                 .setRenderer(RendererManager.getRenderer(vs.getRenderer()))
                 .setDebugLog(vs.isDebugLog());

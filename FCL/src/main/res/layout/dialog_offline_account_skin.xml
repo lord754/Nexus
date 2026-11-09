@@ -78,6 +78,13 @@
 
             </RadioGroup>
 
+            <com.tungsten.fcllibrary.component.view.FCLButton
+                android:id="@+id/browse_skins"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/skin_library_browse" />
+
             <com.tungsten.fcllibrary.component.view.FCLLinearLayout
                 android:id="@+id/local_layout"
                 android:layout_width="match_parent"

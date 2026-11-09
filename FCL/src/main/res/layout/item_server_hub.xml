@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="4dp">
+
+    <com.tungsten.fcllibrary.component.view.FCLConstraintLayout
+        android:id="@+id/card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_container_white"
+        android:padding="10dp"
+        app:auto_tint="true"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <android.widget.FrameLayout
+            android:id="@+id/icon_tile"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="@drawable/bg_server_tile"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.tungsten.fcllibrary.component.view.FCLTextView
+                android:id="@+id/icon_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:singleLine="true"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+        </android.widget.FrameLayout>
+
+        <com.tungsten.fcllibrary.component.view.FCLTextView
+            android:id="@+id/server_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:auto_text_tint="true"
+            app:layout_constraintEnd_toStartOf="@id/join"
+            app:layout_constraintStart_toEndOf="@id/icon_tile"
+            app:layout_constraintTop_toTopOf="@id/icon_tile" />
+
+        <com.tungsten.fcllibrary.component.view.FCLTextView
+            android:id="@+id/server_tag"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textSize="11sp"
+            app:layout_constraintEnd_toStartOf="@id/join"
+            app:layout_constraintStart_toEndOf="@id/icon_tile"
+            app:layout_constraintTop_toBottomOf="@id/server_name"
+            app:use_theme_color="true" />
+
+        <com.tungsten.fcllibrary.component.view.FCLTextView
+            android:id="@+id/server_address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textSize="11sp"
+            app:auto_text_tint="true"
+            app:layout_constraintBottom_toBottomOf="@id/icon_tile"
+            app:layout_constraintEnd_toStartOf="@id/join"
+            app:layout_constraintStart_toEndOf="@id/icon_tile"
+            app:layout_constraintTop_toBottomOf="@id/server_tag" />
+
+        <com.tungsten.fcllibrary.component.view.FCLTextView
+            android:id="@+id/server_desc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="10dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textSize="11sp"
+            app:auto_text_tint="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/icon_tile" />
+
+        <com.tungsten.fcllibrary.component.view.FCLButton
+            android:id="@+id/join"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:text="@string/server_hub_join"
+            app:layout_constraintBottom_toTopOf="@id/server_desc"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/icon_tile" />
+
+    </com.tungsten.fcllibrary.component.view.FCLConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

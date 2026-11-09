@@ -13,13 +13,14 @@ import com.tungsten.fcl.ui.download.DownloadUI
 import com.tungsten.fcl.ui.main.MainUI
 import com.tungsten.fcl.ui.manage.ManageUI
 import com.tungsten.fcl.ui.multiplayer.MultiplayerUI
+import com.tungsten.fcl.ui.serverhub.ServerHubUI
 import com.tungsten.fcl.ui.setting.SettingUI
 import com.tungsten.fcl.ui.version.VersionUI
 import com.tungsten.fcllibrary.component.ui.FCLBaseUI
 import com.tungsten.fcllibrary.component.ui.FCLCommonUI
 
 /**
- * 主界面 UI 管理器：用 ViewPager2 承载 8 个主 UI 页面。
+ * 主界面 UI 管理器：用 ViewPager2 承载 9 个主 UI 页面。
  *
  * UI 实例随 ViewPager 页面生命周期创建/销毁，不保留状态：
  * 页面被 ViewPager 回收（超出 offscreenPageLimit）时销毁对应 UI 实例，
@@ -32,7 +33,7 @@ class UIManager(val context: Context, val pager: ViewPager2) {
     }
 
     /** 页面位置 → UI 实例注册表，页面被回收时销毁并清空对应位 */
-    private val uiRegistry = arrayOfNulls<FCLCommonUI>(8)
+    private val uiRegistry = arrayOfNulls<FCLCommonUI>(9)
 
     /** 页面位置 → UI 工厂 */
     private val factories: List<() -> FCLCommonUI> = listOf(
@@ -43,7 +44,8 @@ class UIManager(val context: Context, val pager: ViewPager2) {
         { MultiplayerUI(context, R.layout.ui_multiplayer) },
         { SettingUI(context, R.layout.ui_setting) },
         { AccountUI(context, R.layout.ui_account) },
-        { VersionUI(context, R.layout.ui_version) }
+        { VersionUI(context, R.layout.ui_version) },
+        { ServerHubUI(context, R.layout.ui_server_hub) }
     )
 
     var currentUI: FCLBaseUI? = null
@@ -83,6 +85,7 @@ class UIManager(val context: Context, val pager: ViewPager2) {
     val settingUI: SettingUI get() = getUI(5) as SettingUI
     val accountUI: AccountUI get() = getUI(6) as AccountUI
     val versionUI: VersionUI get() = getUI(7) as VersionUI
+    val serverHubUI: ServerHubUI get() = getUI(8) as ServerHubUI
 
     fun init() {
         instance = this
@@ -155,7 +158,7 @@ class UIManager(val context: Context, val pager: ViewPager2) {
             var boundPosition: Int = 0
         }
 
-        override fun getItemCount(): Int = 8
+        override fun getItemCount(): Int = 9
 
         override fun getItemViewType(position: Int): Int = position
 

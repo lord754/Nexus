@@ -6,6 +6,8 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.LinearLayoutCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.mio.skin.AnimationDialog;
 import com.mio.skin.SkinRenderer;
@@ -15,34 +17,28 @@ import com.mio.skin.SkinViewer;
 import static com.mio.skin.SkinAnimationsKt.restoreSkinSettings;
 import static com.mio.skin.SkinAnimationsKt.saveSkinSettings;
 import com.tungsten.fcl.R;
+import com.tungsten.fcl.news.MinecraftNews;
+import com.tungsten.fcl.news.MinecraftNewsApi;
 import com.tungsten.fcl.setting.Accounts;
 import com.tungsten.fclcore.auth.Account;
 import com.tungsten.fclcore.fakefx.beans.InvalidationListener;
 import com.tungsten.fclcore.task.Schedulers;
-import com.tungsten.fclcore.task.Task;
 import com.tungsten.fclcore.util.Logging;
-import com.tungsten.fclcore.util.io.HttpRequest;
-import com.tungsten.fcllibrary.component.dialog.FCLAlertDialog;
 import com.tungsten.fcllibrary.component.theme.ThemeEngine;
 import com.tungsten.fcllibrary.component.ui.FCLCommonUI;
-import com.tungsten.fcllibrary.component.view.FCLButton;
-import com.tungsten.fcllibrary.component.view.FCLTextView;
-import com.tungsten.fcllibrary.util.LocaleUtils;
 
 import java.util.logging.Level;
 
-public class MainUI extends FCLCommonUI implements View.OnClickListener {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-    public static final String ANNOUNCEMENT_URL = "https://raw.githubusercontent.com/FCL-Team/FCL-Repo/refs/heads/main/res/announcement_v2.txt";
-    public static final String ANNOUNCEMENT_URL_CN = "https://gitee.com/fcl-team/FCL-Repo/raw/main/res/announcement_v2.txt";
+public class MainUI extends FCLCommonUI {
 
-    private LinearLayoutCompat announcementContainer;
-    private LinearLayoutCompat announcementLayout;
-    private FCLTextView title;
-    private FCLTextView announcementView;
-    private FCLTextView date;
-    private FCLButton hide;
-    private Announcement announcement = null;
+    private LinearLayoutCompat newsContainer;
+    private LinearLayoutCompat newsLayout;
+
+    private final MinecraftNewsAdapter newsAdapter = new MinecraftNewsAdapter();
 
     private SkinViewer skinViewer;
     private SkinRenderer renderer;
@@ -59,14 +55,12 @@ public class MainUI extends FCLCommonUI implements View.OnClickListener {
     @Override
     public void onCreate() {
         super.onCreate();
-        announcementContainer = findViewById(R.id.announcement_container);
-        announcementLayout = findViewById(R.id.announcement_layout);
-        title = findViewById(R.id.title);
-        announcementView = findViewById(R.id.announcement);
-        date = findViewById(R.id.date);
-        hide = findViewById(R.id.hide);
-        ThemeEngine.getInstance().registerEvent(announcementLayout, () -> announcementLayout.getBackground().setTint(ThemeEngine.getInstance().getTheme().getColor()));
-        hide.setOnClickListener(this);
+        newsContainer = findViewById(R.id.news_container);
+        newsLayout = findViewById(R.id.news_layout);
+        RecyclerView newsList = findViewById(R.id.news_list);
+        newsList.setLayoutManager(new LinearLayoutManager(getContext()));
+        newsList.setAdapter(newsAdapter);
+        ThemeEngine.getInstance().registerEvent(newsLayout, () -> newsLayout.getBackground().setTint(ThemeEngine.getInstance().getTheme().getColor()));
 
         skinViewer = findViewById(R.id.skin_viewer);
         renderer = new SkinRenderer(getContext());
@@ -88,7 +82,7 @@ public class MainUI extends FCLCommonUI implements View.OnClickListener {
                 }).show();
             }
         });
-        checkAnnouncement();
+        loadNews();
 
         // 皮肤渲染随页面挂载/回收恢复与暂停（替代原 onStart/onStop 生命周期）
         getContentView().addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
@@ -144,30 +138,26 @@ public class MainUI extends FCLCommonUI implements View.OnClickListener {
         }
     }
 
+    /**
+     * 拉取官方 Minecraft 新闻并展示；请求失败或没有条目时保持卡片隐藏，
+     * 主页没有新闻卡片时不影响其余内容。
+     */
+    private void loadNews() {
+        MinecraftNewsApi.create().getNews().enqueue(new Callback<MinecraftNews>() {
+            @Override
+            public void onResponse(@NonNull Call<MinecraftNews> call, @NonNull Response<MinecraftNews> response) {
+                MinecraftNews news = response.body();
+                if (!response.isSuccessful() || news == null || news.getEntries().isEmpty())
+                    return;
+                newsContainer.setVisibility(View.VISIBLE);
+                newsAdapter.submit(news.getEntries());
+            }
 
-    private void checkAnnouncement() {
-        try {
-            String url = LocaleUtils.isChinese(getContext()) ? ANNOUNCEMENT_URL_CN : ANNOUNCEMENT_URL;
-            Task.supplyAsync(() -> HttpRequest.HttpGetRequest.GET(url).getJson(Announcement.class))
-                    .thenAcceptAsync(Schedulers.androidUIThread(), announcement -> {
-                        this.announcement = announcement;
-                        if (!announcement.shouldDisplay(getContext()))
-                            return;
-                        announcementContainer.setVisibility(View.VISIBLE);
-                        title.setText(getContext().getString(R.string.announcement, announcement.getDisplayTitle(getContext())));
-                        announcementView.setText(announcement.getDisplayContent(getContext()));
-                        date.setText(getContext().getString(R.string.update_date, announcement.getDate()));
-                    }).start();
-        } catch (Exception e) {
-            Logging.LOG.log(Level.WARNING, "Failed to get announcement!", e);
-        }
-    }
-
-    private void hideAnnouncement() {
-        announcementContainer.setVisibility(View.GONE);
-        if (announcement != null) {
-            announcement.hide(getContext());
-        }
+            @Override
+            public void onFailure(@NonNull Call<MinecraftNews> call, @NonNull Throwable t) {
+                Logging.LOG.log(Level.WARNING, "Failed to get Minecraft news!", t);
+            }
+        });
     }
 
     public void refreshSkin(Account account) {
@@ -176,22 +166,5 @@ public class MainUI extends FCLCommonUI implements View.OnClickListener {
                 skinLoader.load(account, true);
             }
         });
-    }
-
-    @Override
-    public void onClick(View view) {
-        if (view == hide) {
-            if (announcement != null && announcement.isSignificant()) {
-                FCLAlertDialog.Builder builder = new FCLAlertDialog.Builder(getContext());
-                builder.setAlertLevel(FCLAlertDialog.AlertLevel.ALERT);
-                builder.setCancelable(false);
-                builder.setMessage(getContext().getString(R.string.announcement_significant));
-                builder.setPositiveButton(this::hideAnnouncement);
-                builder.setNegativeButton(null);
-                builder.create().show();
-            } else {
-                hideAnnouncement();
-            }
-        }
     }
 }

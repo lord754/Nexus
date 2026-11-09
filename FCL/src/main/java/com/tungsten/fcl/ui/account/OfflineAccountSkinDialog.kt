@@ -45,6 +45,7 @@ class OfflineAccountSkinDialog(context: Context, private val accountListItem: Ac
 
         binding.modelClassic.setOnClickListener(this)
         binding.modelSlim.setOnClickListener(this)
+        binding.browseSkins.setOnClickListener(this)
         binding.skinPath.setOnClickListener(this)
         binding.skinPathReset.setOnClickListener(this)
         binding.capePath.setOnClickListener(this)
@@ -157,6 +158,15 @@ class OfflineAccountSkinDialog(context: Context, private val accountListItem: Ac
                 refreshModelRadio()
                 refreshSkin()
             }
+            // 在线皮肤库：选中的皮肤直接落位 SKIN_DIR 并立即生效（与账号列表长按选皮肤一致）
+            binding.browseSkins -> SkinLibraryDialog(
+                context,
+                File(FCLPath.SKIN_DIR, "${account.uuid}.png")
+            ) { path ->
+                binding.skinPathText.string = path
+                applySkin()
+            }.show()
+
             // File selection：先放缓存，点确认时才落位 SKIN_DIR，取消不影响已有皮肤文件
             binding.skinPath -> MainActivity.getInstance().fileLauncher.launchSingleSelection(
                 null,
@@ -191,13 +201,19 @@ class OfflineAccountSkinDialog(context: Context, private val accountListItem: Ac
             binding.positive -> {
                 commitSkinFile(binding.skinPathText, "${account.uuid}.png")
                 commitSkinFile(binding.capePathText, "${account.uuid}_cape.png")
-                account.setSkin(this.skin)
-                accountListItem.refreshSkinBinding()
+                applySkin()
                 dismiss()
             }
 
             binding.negative -> dismiss()
         }
+    }
+
+    /** 把界面上当前的模型 / 皮肤 / 披风应用到账号，并刷新列表与预览 */
+    private fun applySkin() {
+        account.setSkin(this.skin)
+        accountListItem.refreshSkinBinding()
+        refreshSkin()
     }
 
     /** 把临时选中的皮肤/披风文件落位到 SKIN_DIR 固定名，并更新为最终路径 */

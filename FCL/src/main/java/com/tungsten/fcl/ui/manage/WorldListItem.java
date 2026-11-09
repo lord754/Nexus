@@ -8,22 +8,34 @@ import static com.tungsten.fcllibrary.util.LocaleUtils.formatDateTime;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.os.Environment;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatDialog;
 
 import com.tungsten.fcl.R;
 import com.tungsten.fcl.activity.MainActivity;
 import com.mio.util.DialogUtilKt;
+import com.tungsten.fcl.ui.TaskDialog;
+import com.tungsten.fcl.util.TaskCancellationAction;
 import com.tungsten.fclcore.fakefx.beans.property.SimpleStringProperty;
 import com.tungsten.fclcore.fakefx.beans.property.StringProperty;
 import com.tungsten.fclcore.game.World;
 import com.tungsten.fclcore.game.WorldLockedException;
 import com.tungsten.fclcore.task.Schedulers;
 import com.tungsten.fclcore.task.Task;
+import com.tungsten.fclcore.task.TaskExecutor;
+import com.tungsten.fclcore.task.TaskListener;
+import com.tungsten.fclcore.util.StringUtils;
 import com.tungsten.fcllibrary.component.dialog.EditDialog;
 import com.tungsten.fcllibrary.component.dialog.FCLAlertDialog;
 
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class WorldListItem {
     private final Context context;
@@ -65,6 +77,46 @@ public class WorldListItem {
             WorldExportDialog dialog = new WorldExportDialog(context, world, files.get(0).getPath());
             dialog.show();
         });
+    }
+
+    /**
+     * 备份世界：把世界目录打包成 zip 保存到公共下载目录（无需挑选目录，一键完成）。
+     */
+    public void backup() {
+        File downloads = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        String fileName = sanitizeFileName(world.getWorldName())
+                + "-backup-" + DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss").format(LocalDateTime.now())
+                + ".zip";
+        File target = new File(downloads, fileName);
+
+        TaskDialog taskDialog = new TaskDialog(context, new TaskCancellationAction(AppCompatDialog::dismiss));
+        taskDialog.setTitle(context.getString(R.string.world_backup_wizard, world.getWorldName()));
+        Task<?> task = Task.runAsync(context.getString(R.string.world_backup_wizard, world.getWorldName()), () -> {
+            if (!downloads.isDirectory() && !downloads.mkdirs())
+                throw new IOException("Unable to create directory " + downloads);
+            world.export(target.toPath(), world.getWorldName());
+        });
+        TaskExecutor executor = task.executor(new TaskListener() {
+            @Override
+            public void onStop(boolean success, TaskExecutor taskExecutor) {
+                Schedulers.androidUIThread().execute(() -> {
+                    if (success) {
+                        Toast.makeText(context, context.getString(R.string.world_backup_success, target.getAbsolutePath()), Toast.LENGTH_LONG).show();
+                    } else if (taskExecutor.getException() != null) {
+                        DialogUtilKt.showErrorDialog(context, StringUtils.getStackTrace(taskExecutor.getException()));
+                    }
+                });
+            }
+        });
+        taskDialog.setExecutor(executor);
+        taskDialog.show();
+        executor.start();
+    }
+
+    /** 世界名可能含颜色代码等非法文件名字符，统一替换为下划线 */
+    private static String sanitizeFileName(String worldName) {
+        String sanitized = worldName.replaceAll("[\\\\/:*?\"<>|\u00a7]", "_").trim();
+        return sanitized.isEmpty() ? "world" : sanitized;
     }
 
     public void manageDatapacks() {

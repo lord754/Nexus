@@ -64,6 +64,7 @@
     <string name="account_methods_offline_name_invalid">通常情况下，用户名只能包含英文字符，数字和下划线，且长度不得超过 16 个字符。\n一些有效的名称：Tungsten，Tungsten_123；\n一些无效的名称：Exam ple，Exam-a_%%%，Tungsten_hello_world_hello_world。\n如果你有相关模组或插件可以解除此限制，你可以忽略此警告。</string>
     <string name="account_methods_yggdrasil">Mojang 账户</string>
     <string name="account_methods_authlib_injector">外置账户</string>
+    <string name="account_methods_elyby">Ely.by</string>
     <string name="account_methods_microsoft">微软账户</string>
     <string name="account_failed">账户刷新失败</string>
     <string name="account_failed_no_character">该账户中无角色。</string>
@@ -105,6 +106,11 @@
     <string name="account_skin_type_default">默认</string>
     <string name="account_skin_upload">选择皮肤文件</string>
     <string name="account_skin_model">皮肤模型</string>
+    <string name="skin_library">皮肤库</string>
+    <string name="skin_library_browse">浏览皮肤</string>
+    <string name="skin_library_applied">皮肤已应用</string>
+    <string name="skin_library_load_failed">在线皮肤库加载失败，请检查网络后重试。</string>
+    <string name="skin_library_apply_failed">皮肤下载失败，请重试。</string>
     <string name="account_skin_upload_file">上传</string>
     <string name="account_skin_no_file_selected">未选择文件</string>
     <string name="account_skin_reset">重置</string>
@@ -124,8 +130,7 @@
     <string name="action_share">分享</string>
     <string name="action_upload">上传日志</string>
     <string name="action_skip">跳过</string>
-    <string name="announcement">公告：%s</string>
-    <string name="announcement_significant">此公告为重要公告，隐藏前请确认你已阅读此公告，是否继续隐藏？</string>
+    <string name="minecraft_news_title">Minecraft 新闻</string>
     <string name="archive_author">作者</string>
     <string name="archive_date">发布时间</string>
     <string name="archive_game_version">游戏版本</string>
@@ -327,6 +332,8 @@
     <string name="curse_sort_total_downloads">下载量</string>
     <string name="datapack_add">添加数据包</string>
     <string name="datapack_choose_datapack">选择一个数据包导入</string>
+    <string name="discord_rpc_details">正在游玩 Minecraft</string>
+    <string name="discord_rpc_state">使用 Nexus 启动器</string>
     <string name="download_code_404">远程服务器不包含需要下载的文件: %s</string>
     <string name="download_failed">下载失败: %1$s，错误码：%2$d</string>
     <string name="download_failed_empty">没有可供选择的版本</string>
@@ -1056,6 +1063,15 @@
     <string name="settings_launcher_exit_after_launching_desc">启动游戏后自动退出启动器，将不再显示崩溃界面</string>
     <string name="settings_launcher_custom_launcher_name">自定义启动器信息</string>
     <string name="settings_launcher_custom_launcher_name_desc">自定义启动器在游戏内显示的名称</string>
+    <string name="settings_launcher_performance_preset">性能预设</string>
+    <string name="settings_launcher_performance_preset_desc">对当前选中的版本一键套用内存分配、渲染器与图形后端的组合</string>
+    <string name="settings_launcher_preset_performance">性能</string>
+    <string name="settings_launcher_preset_balanced">均衡</string>
+    <string name="settings_launcher_preset_quality">画质</string>
+    <string name="settings_launcher_preset_applied">已将%1$s预设套用到 %2$s</string>
+    <string name="settings_launcher_preset_target_global">全局设置</string>
+    <string name="settings_launcher_discord_rpc">Discord 状态同步</string>
+    <string name="settings_launcher_discord_rpc_desc">游戏运行期间在 Discord 个人资料上显示「正在游玩 Minecraft」。需要填写 Discord 应用 ID，留空则关闭。</string>
     <string name="settings_launcher_allow_screenshot">允许在崩溃界面截图/录屏</string>
     <string name="settings_launcher_allow_screenshot_desc">允许在当前已经禁止截图或录屏的界面继续截图或录屏</string>
     <string name="settings_memory">游戏内存</string>
@@ -1250,6 +1266,9 @@
     <string name="view_info_reference_width">屏幕宽</string>
     <string name="view_info_reference_height">屏幕高</string>
     <string name="world">世界</string>
+    <string name="world_backup">备份世界</string>
+    <string name="world_backup_success">已备份至 %s</string>
+    <string name="world_backup_wizard">正在备份世界 %s</string>
     <string name="world_permission_fix">修复世界文件权限</string>
     <string name="world_add">添加世界</string>
     <string name="world_datapack">管理数据包</string>
@@ -1490,4 +1509,7 @@
     <string name="quark_promo_message">这是你第 %1$d 次启动游戏！\n\n如果 FCL 对你有帮助，欢迎动动手指打开夸克网盘，注册或登录后点击保存到网盘（不用下载），就是对我们最大的支持，十分感谢～</string>
     <string name="quark_promo_open">打开夸克网盘</string>
     <string name="quark_promo_start">开始游戏</string>
+    <string name="server_hub">服务器中心</string>
+    <string name="server_hub_desc">热门社区服务器，点击「加入」直接用当前版本进入该服务器，地址会自动作为 --server/--port 传入启动参数。</string>
+    <string name="server_hub_join">加入</string>
 </resources>

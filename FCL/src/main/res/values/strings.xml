@@ -81,6 +81,7 @@
     <string name="account_methods_offline_name_invalid">Under normal circumstances, the game username can only contain English characters, numbers and underscores, and the length cannot exceed 16 characters.\nSome legitimate usernames: Tungsten, Tungsten_123;\nSome illegal usernames: Exam ple, Exam-a_%%%, Tungsten_hello_world_hello_world.\nIf you believe that there is a corresponding mod or plugin on the server side to remove this restriction, you can ignore this warning.</string>
     <string name="account_methods_yggdrasil">Mojang Account</string>
     <string name="account_methods_authlib_injector">External Account</string>
+    <string name="account_methods_elyby">Ely.by</string>
     <string name="account_methods_microsoft">Microsoft Account</string>
     <string name="account_failed">Account refresh failed</string>
     <string name="account_failed_expired">Credential has expired, you must delete your account and re-login.</string>
@@ -127,6 +128,11 @@
     <string name="account_skin_model_classic" translatable="false">Classic (Steve)</string>
     <string name="account_skin_model_slim" translatable="false">Slim (Alex)</string>
     <string name="account_skin_model">Skin Model</string>
+    <string name="skin_library">Skin Library</string>
+    <string name="skin_library_browse">Browse Skins</string>
+    <string name="skin_library_applied">Skin applied</string>
+    <string name="skin_library_load_failed">Failed to load the online skin library. Check your connection and try again.</string>
+    <string name="skin_library_apply_failed">Failed to download the skin. Please try again.</string>
     <string name="account_skin_upload_file">Upload</string>
     <string name="account_skin_no_file_selected">No file selected</string>
     <string name="account_skin_reset">Reset</string>
@@ -148,8 +154,7 @@
     <string name="action_upload">Upload log</string>
     <string name="action_skip">Skip</string>
 
-    <string name="announcement">Announcement: %s</string>
-    <string name="announcement_significant">This announcement is an important announcement. Please confirm that you have read this announcement before hiding it. Do you want to continue hiding it?</string>
+    <string name="minecraft_news_title">Minecraft News</string>
 
     <string name="archive_author">Author(s)</string>
     <string name="archive_date">Publish Date</string>
@@ -373,6 +378,8 @@
     <string name="datapack_add">Install datapack</string>
     <string name="datapack_choose_datapack">Select a datapack to import</string>
 
+    <string name="discord_rpc_details">Playing Minecraft</string>
+    <string name="discord_rpc_state">on Nexus Launcher</string>
     <string name="download_code_404">File not found on the remote server: %s</string>
     <string name="download_failed">Failed to download %1$s, response code: %2$d</string>
     <string name="download_failed_empty">No versions are available</string>
@@ -1189,6 +1196,15 @@
     <string name="settings_launcher_exit_after_launching_desc">Exit the launcher automatically after the game starts. The crash screen will no longer be shown.</string>
     <string name="settings_launcher_custom_launcher_name">Custom launcher information</string>
     <string name="settings_launcher_custom_launcher_name_desc">Customize the launcher name displayed in-game.</string>
+    <string name="settings_launcher_performance_preset">Performance preset</string>
+    <string name="settings_launcher_performance_preset_desc">Applies a preset bundle of memory allocation, renderer and graphics backend to the currently selected version.</string>
+    <string name="settings_launcher_preset_performance">Performance</string>
+    <string name="settings_launcher_preset_balanced">Balanced</string>
+    <string name="settings_launcher_preset_quality">Quality</string>
+    <string name="settings_launcher_preset_applied">%1$s preset applied to %2$s.</string>
+    <string name="settings_launcher_preset_target_global">global settings</string>
+    <string name="settings_launcher_discord_rpc">Discord Rich Presence</string>
+    <string name="settings_launcher_discord_rpc_desc">Broadcasts a \"Playing Minecraft\" status to your Discord profile while the game runs. Fill in a Discord application ID; leave empty to turn it off.</string>
     <string name="settings_launcher_allow_screenshot">Allow screenshot/recording in crash activity</string>
     <string name="settings_launcher_allow_screenshot_desc">Allow screenshots or screen recording on interfaces where they are currently prohibited.</string>
 
@@ -1391,6 +1407,9 @@
     <string name="view_info_reference_height">Screen Height</string>
 
     <string name="world">Worlds</string>
+    <string name="world_backup">Backup world</string>
+    <string name="world_backup_success">World backed up to %s</string>
+    <string name="world_backup_wizard">Backing up world %s</string>
     <string name="world_permission_fix">Fix World File Permissions</string>
     <string name="world_add">Add a World (.zip)</string>
     <string name="world_datapack">Manage Datapacks</string>
@@ -1643,4 +1662,7 @@
     <string name="quark_promo_message">This is your %1$dth game launch!\n\nIf Nexus has been helpful to you, feel free to take a moment to open Quark Drive, sign up or log in and tap the Save to Drive button (no download needed). It would mean a lot to us. Thank you so much!</string>
     <string name="quark_promo_open">Open Quark Drive</string>
     <string name="quark_promo_start">Start Game</string>
+    <string name="server_hub">Server Hub</string>
+    <string name="server_hub_desc">Popular community servers. Press Join to start the current version straight into that server — the address is passed to the game automatically.</string>
+    <string name="server_hub_join">Join</string>
 </resources>

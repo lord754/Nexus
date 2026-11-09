@@ -31,6 +31,7 @@ import com.tungsten.fcl.control.MenuCallback;
 import com.tungsten.fcl.control.MenuType;
 import com.tungsten.fcl.control.view.MenuView;
 import com.tungsten.fcl.game.sdl.SdlBridge;
+import com.mio.discord.DiscordRpc;
 import com.mio.flite.FliteTts;
 import com.mio.service.GameService;
 import com.tungsten.fcl.setting.GameOption;
@@ -495,6 +496,7 @@ public class JVMActivity extends FCLActivity implements TextureView.SurfaceTextu
         SdlBridge.reset();
         FliteTts.shutdown();
         GameService.stop(this);
+        DiscordRpc.clear();
         super.onDestroy();
     }
 

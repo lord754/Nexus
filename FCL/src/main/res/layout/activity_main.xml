@@ -31,8 +31,8 @@
 
         <com.tungsten.fcllibrary.component.view.FCLMenuView
             android:id="@+id/home"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
             android:src="@drawable/ic_baseline_home_24"
             app:layout_constraintBottom_toTopOf="@id/manage"
             app:layout_constraintStart_toStartOf="parent"
@@ -40,9 +40,9 @@
 
         <com.tungsten.fcllibrary.component.view.FCLMenuView
             android:id="@+id/manage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_marginTop="4dp"
             android:src="@drawable/ic_baseline_build_24"
             app:layout_constraintBottom_toTopOf="@id/download"
             app:layout_constraintStart_toStartOf="parent"
@@ -50,9 +50,9 @@
 
         <com.tungsten.fcllibrary.component.view.FCLMenuView
             android:id="@+id/download"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_marginTop="4dp"
             android:src="@drawable/ic_baseline_cloud_download_24"
             app:layout_constraintBottom_toTopOf="@id/controller"
             app:layout_constraintStart_toStartOf="parent"
@@ -60,9 +60,9 @@
 
         <com.tungsten.fcllibrary.component.view.FCLMenuView
             android:id="@+id/controller"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_marginTop="4dp"
             android:src="@drawable/ic_baseline_videogame_asset_24"
             app:layout_constraintBottom_toTopOf="@id/multiplayer"
             app:layout_constraintStart_toStartOf="parent"
@@ -70,29 +70,39 @@
 
         <com.tungsten.fcllibrary.component.view.FCLMenuView
             android:id="@+id/multiplayer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_marginTop="4dp"
             android:src="@drawable/ic_outline_account_tree_24"
             app:layout_constraintBottom_toTopOf="@id/setting"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/controller" />
 
         <com.tungsten.fcllibrary.component.view.FCLMenuView
-            android:id="@+id/setting"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/ic_baseline_settings_24"
-            app:layout_constraintBottom_toTopOf="@id/back"
-            app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/server_hub"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_marginTop="4dp"
+            android:src="@drawable/ic_baseline_server_24"
+            app:layout_constraintBottom_toTopOf="@id/setting"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/multiplayer" />
 
         <com.tungsten.fcllibrary.component.view.FCLMenuView
+            android:id="@+id/setting"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_marginTop="4dp"
+            android:src="@drawable/ic_baseline_settings_24"
+            app:layout_constraintBottom_toTopOf="@id/back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/server_hub" />
+
+        <com.tungsten.fcllibrary.component.view.FCLMenuView
             android:id="@+id/back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_marginTop="4dp"
             android:src="@drawable/ic_baseline_arrow_back_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

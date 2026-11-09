@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.tungsten.fcl.R;
 import com.tungsten.fclcore.auth.authlibinjector.AuthlibInjectorServer;
@@ -43,6 +44,13 @@ public class AddAuthlibInjectorServerDialog extends FCLDialog implements View.On
     private AuthlibInjectorServer serverBeingAdded;
 
     public AddAuthlibInjectorServerDialog(@NonNull Context context) {
+        this(context, null);
+    }
+
+    /**
+     * @param initialUrl 预填的服务器地址（预设入口，如 Ely.by），null 表示留空由用户填写
+     */
+    public AddAuthlibInjectorServerDialog(@NonNull Context context, @Nullable String initialUrl) {
         super(context);
         setCancelable(false);
         setContentView(R.layout.dialog_add_authlib_injector_server);
@@ -68,6 +76,11 @@ public class AddAuthlibInjectorServerDialog extends FCLDialog implements View.On
 
         firstLayout.setVisibility(View.VISIBLE);
         secondLayout.setVisibility(View.GONE);
+
+        if (initialUrl != null) {
+            editText.setText(initialUrl);
+            editText.setSelection(initialUrl.length());
+        }
     }
 
     private void next() {

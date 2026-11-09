@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="4dp">
+
+    <com.tungsten.fcllibrary.component.view.FCLConstraintLayout
+        android:id="@+id/parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_container_white_clickable"
+        app:auto_tint="true"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.tungsten.fcllibrary.component.view.FCLImageView
+            android:id="@+id/skin_image"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.tungsten.fcllibrary.component.view.FCLProgressBar
+            android:id="@+id/skin_progress"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:indeterminate="true"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/skin_image"
+            app:layout_constraintEnd_toEndOf="@id/skin_image"
+            app:layout_constraintStart_toStartOf="@id/skin_image"
+            app:layout_constraintTop_toTopOf="@id/skin_image" />
+
+        <com.tungsten.fcllibrary.component.view.FCLTextView
+            android:id="@+id/skin_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="4dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:singleLine="true"
+            android:textSize="10sp"
+            app:auto_text_tint="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/skin_image" />
+
+    </com.tungsten.fcllibrary.component.view.FCLConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

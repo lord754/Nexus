@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.edit
 import androidx.recyclerview.widget.RecyclerView
+import com.mio.discord.DiscordRpc
 import com.tungsten.fcl.R
 import com.tungsten.fcl.databinding.ItemLauncherSettingButtonBinding
 import com.tungsten.fcl.databinding.ItemLauncherSettingSeekbarBinding
@@ -30,8 +31,9 @@ import com.tungsten.fcllibrary.util.LocaleUtils
 /** 启动器设置行操作标签：按钮 / 开关 / Spinner / SeekBar / 勾选框按此分发 */
 enum class LauncherSettingTag {
     // 按钮行
-    CHECK_UPDATE,
-    SHOW_CHANGELOG,
+    PRESET_PERFORMANCE,
+    PRESET_BALANCED,
+    PRESET_QUALITY,
     EXPORT_LOG,
     REQUEST_AUDIO,
     CLEAR_MOD_CACHE,
@@ -146,12 +148,6 @@ class LauncherSettingAdapter(
                 R.string.settings_launcher_language, languageList,
                 LocaleUtils.getLanguage(context), LauncherSettingTag.SPINNER_LANGUAGE,
                 R.string.settings_launcher_language_desc,
-            ),
-            Row.ButtonRow(
-                R.string.settings_launcher_upgrade,
-                listOf(Triple(0, R.string.settings_launcher_upgrade_check, LauncherSettingTag.CHECK_UPDATE),
-                    Triple(0, R.string.settings_launcher_update_changelog, LauncherSettingTag.SHOW_CHANGELOG)),
-                R.string.settings_launcher_upgrade_desc,
             ),
             Row.ButtonRow(
                 R.string.settings_launcher_debug,
@@ -285,6 +281,24 @@ class LauncherSettingAdapter(
                 $$"Fold Craft Launcher/${launcher_version}",
                 R.string.settings_launcher_custom_launcher_name_desc,
                 group = SettingGroup.InGame
+            ),
+            Row.ButtonRow(
+                R.string.settings_launcher_performance_preset,
+                listOf(
+                    Triple(0, R.string.settings_launcher_preset_performance, LauncherSettingTag.PRESET_PERFORMANCE),
+                    Triple(0, R.string.settings_launcher_preset_balanced, LauncherSettingTag.PRESET_BALANCED),
+                    Triple(0, R.string.settings_launcher_preset_quality, LauncherSettingTag.PRESET_QUALITY)
+                ),
+                R.string.settings_launcher_performance_preset_desc,
+                group = SettingGroup.Launcher
+            ),
+            Row.EditRow(
+                R.string.settings_launcher_discord_rpc,
+                { prefs.getString(DiscordRpc.PREF_CLIENT_ID, "").orEmpty() },
+                { text -> prefs.edit { putString(DiscordRpc.PREF_CLIENT_ID, text.trim()) } },
+                "Discord Application ID",
+                R.string.settings_launcher_discord_rpc_desc,
+                group = SettingGroup.Launcher
             ),
             Row.SwitchRow(
                 R.string.settings_launcher_ignore_notch,

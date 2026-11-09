@@ -30,7 +30,10 @@ import com.tungsten.fcl.R;
 import com.tungsten.fcl.activity.MainActivity;
 import com.tungsten.fcl.databinding.PageSettingListBinding;
 import com.tungsten.fcl.setting.DownloadSource;
-import com.tungsten.fcl.upgrade.UpdateChecker;
+import com.tungsten.fcl.setting.PerformancePreset;
+import com.tungsten.fcl.setting.Profile;
+import com.tungsten.fcl.setting.Profiles;
+import com.tungsten.fcl.setting.VersionSetting;
 import com.tungsten.fclcore.mod.RemoteModCache;
 import com.tungsten.fclauncher.utils.FCLPath;
 import com.tungsten.fclcore.task.FetchTask;
@@ -93,34 +96,31 @@ public class LauncherSettingPage extends FCLPage implements LauncherSettingAdapt
     }
 
 
+    /**
+     * 套用性能预设到当前选中版本的设置；未选中版本时按生效口径回落到全局版本设置。
+     */
+    private void applyPerformancePreset(PerformancePreset preset, int labelRes) {
+        Profile profile = Profiles.getSelectedProfile();
+        String version = profile.getSelectedVersion();
+        VersionSetting setting = profile.getVersionSetting(version);
+        preset.applyTo(getContext(), setting);
+        Toast.makeText(getContext(), getContext().getString(R.string.settings_launcher_preset_applied,
+                        getContext().getString(labelRes),
+                        version == null ? getContext().getString(R.string.settings_launcher_preset_target_global) : version),
+                Toast.LENGTH_LONG).show();
+    }
+
     @Override
     public void onButtonClick(LauncherSettingTag tag) {
         switch (tag) {
-            case CHECK_UPDATE:
-                if (!UpdateChecker.getInstance().isChecking()) {
-                    UpdateChecker.getInstance().checkManually(getContext()).whenComplete(Schedulers.androidUIThread(), e -> {
-                        if (e != null) {
-                            FCLAlertDialog.Builder builder = new FCLAlertDialog.Builder(getContext());
-                            builder.setCancelable(false);
-                            builder.setAlertLevel(FCLAlertDialog.AlertLevel.ALERT);
-                            builder.setMessage(getContext().getString(R.string.update_check_failed) + "\n" + e);
-                            builder.setNegativeButton(getContext().getString(com.tungsten.fcl.R.string.dialog_positive), null);
-                            builder.create().show();
-                        }
-                    }).start();
-                }
+            case PRESET_PERFORMANCE:
+                applyPerformancePreset(PerformancePreset.PERFORMANCE, R.string.settings_launcher_preset_performance);
                 break;
-            case SHOW_CHANGELOG:
-                UpdateChecker.getInstance().showCurrentChangelog(getContext()).whenComplete(Schedulers.androidUIThread(), e -> {
-                    if (e != null) {
-                        FCLAlertDialog.Builder builder = new FCLAlertDialog.Builder(getContext());
-                        builder.setCancelable(false);
-                        builder.setAlertLevel(FCLAlertDialog.AlertLevel.ALERT);
-                        builder.setMessage(getContext().getString(R.string.update_check_failed) + "\n" + e);
-                        builder.setNegativeButton(getContext().getString(com.tungsten.fcl.R.string.dialog_positive), null);
-                        builder.create().show();
-                    }
-                }).start();
+            case PRESET_BALANCED:
+                applyPerformancePreset(PerformancePreset.BALANCED, R.string.settings_launcher_preset_balanced);
+                break;
+            case PRESET_QUALITY:
+                applyPerformancePreset(PerformancePreset.QUALITY, R.string.settings_launcher_preset_quality);
                 break;
             case EXPORT_LOG:
                 exportLog();

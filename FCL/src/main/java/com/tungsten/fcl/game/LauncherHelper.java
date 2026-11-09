@@ -35,6 +35,7 @@ import androidx.annotation.Nullable;
 import com.google.gson.GsonBuilder;
 import com.mio.JavaManager;
 import com.mio.data.Renderer;
+import com.mio.discord.DiscordRpc;
 import com.mio.manager.RendererManager;
 import com.mio.minecraft.ModCheckException;
 import com.mio.minecraft.ModChecker;
@@ -126,6 +127,8 @@ public final class LauncherHelper {
     private final TaskDialog launchingStepsPane;
     private double scaleFactor;
     private double cursorOffset;
+    /** 服务器中心「加入」传入的一次性服务器地址（host:port），仅本次启动生效 */
+    private String serverAddress;
 
     public LauncherHelper(Context context, Profile profile, Account account, String selectedVersion) {
         this.context = Objects.requireNonNull(context);
@@ -135,6 +138,11 @@ public final class LauncherHelper {
         this.setting = profile.getVersionSetting(selectedVersion);
         this.launchingStepsPane = new TaskDialog(context, TaskCancellationAction.NORMAL);
         this.launchingStepsPane.setTitle(context.getString(R.string.version_launch));
+    }
+
+    /** 供服务器中心的「加入」使用：把该地址作为本次启动的 --server/--port 参数 */
+    public void setServerAddress(String serverAddress) {
+        this.serverAddress = serverAddress;
     }
 
     public void launch() {
@@ -236,7 +244,7 @@ public final class LauncherHelper {
                             }
                             // 强制分辨率已迁移到游戏内菜单（MenuSetting），启动前同步进静态配置
                             FCLBridge.initForceResolution(menuSetting);
-                            LaunchOptions launchOptions = repository.getLaunchOptions(selectedVersion, javaVersionRef.get(), profile.getGameDir(), scaleFactor, cursorOffset);
+                            LaunchOptions launchOptions = repository.getLaunchOptions(selectedVersion, javaVersionRef.get(), profile.getGameDir(), scaleFactor, cursorOffset, serverAddress);
                             FCLGameLauncher launcher = new FCLGameLauncher(
                                     context,
                                     repository,
@@ -301,6 +309,8 @@ public final class LauncherHelper {
                             bundle.putString("TERRACOTTA_PLAYER", account.getUsername());
                             intent.putExtras(bundle);
                             LOG.log(Level.INFO, "Start JVMActivity!");
+                            // 游戏实例启动：同步 Discord Rich Presence（未配置或 Discord 不可达时静默跳过）
+                            DiscordRpc.setPlaying(context);
                             context.startActivity(intent);
                             if (MainActivity.getInstance().shouldPlayVideo()) {
                                 MainActivity.getInstance().setMediaPlayer(null);

@@ -68,7 +68,6 @@ import com.tungsten.fcl.ui.download.modpack.LocalModpackPage
 import com.tungsten.fcl.ui.main.MainUI
 import com.tungsten.fcl.ui.version.VersionListViewModel
 import com.tungsten.fcl.ui.version.Versions
-import com.tungsten.fcl.upgrade.UpdateChecker
 import com.tungsten.fcl.util.LegalAgreement
 import com.tungsten.fclauncher.utils.FCLPath
 import com.tungsten.fclcore.auth.Account
@@ -146,6 +145,9 @@ class MainActivity : FCLActivity(), OnSelectListener, View.OnClickListener {
 
     /** 通知点击进入后待执行的"定位到下载页"请求（uiManager 初始化前先排队） */
     private var pendingOpenDownload = false
+
+    /** 服务器中心「加入」传入的一次性服务器地址，仅本次启动生效，不写回版本设置 */
+    private var launchServerAddress: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -291,10 +293,15 @@ class MainActivity : FCLActivity(), OnSelectListener, View.OnClickListener {
                             refreshMenuView(null)
                             title.setTextWithAnim(getString(R.string.version))
                         }
+
+                        8 -> {
+                            refreshMenuView(serverHub)
+                            serverHub.setSelected(true)
+                        }
                     }
                 }
                 // 点击左侧菜单项：始终播放选中动画（已选中时重复点击也能触发），选中与切换逻辑沿用 setSelected
-                listOf(home, manage, download, controller, multiplayer, setting).forEach { menu ->
+                listOf(home, manage, download, controller, multiplayer, serverHub, setting).forEach { menu ->
                     menu.setOnClickListener {
                         playMenuAnim(menu)
                         menu.setSelected(true)
@@ -305,6 +312,7 @@ class MainActivity : FCLActivity(), OnSelectListener, View.OnClickListener {
                 download.setOnSelectListener(this@MainActivity)
                 controller.setOnSelectListener(this@MainActivity)
                 multiplayer.setOnSelectListener(this@MainActivity)
+                serverHub.setOnSelectListener(this@MainActivity)
                 setting.setOnSelectListener(this@MainActivity)
                 home.setSelected(true)
                 home.setOnLongClickListener {
@@ -316,7 +324,6 @@ class MainActivity : FCLActivity(), OnSelectListener, View.OnClickListener {
                     startActivity(Intent(this@MainActivity, ShellActivity::class.java))
                     true
                 }
-                UpdateChecker.getInstance().checkAuto(this@MainActivity).start()
                 if (!checkNotificationPermission() && getSharedPreferences(
                         "launcher",
                         MODE_PRIVATE
@@ -543,6 +550,11 @@ class MainActivity : FCLActivity(), OnSelectListener, View.OnClickListener {
         refreshMenuView(view)
         binding.apply {
             when (view) {
+                serverHub -> {
+                    title.setTextWithAnim(getString(R.string.server_hub))
+                    uiManager.switchUI(uiManager.serverHubUI)
+                }
+
                 home -> {
                     title.setTextWithAnim(getString(R.string.app_name) + " " + getString(R.string.app_version))
                     uiManager.switchUI(uiManager.mainUI)
@@ -756,11 +768,19 @@ class MainActivity : FCLActivity(), OnSelectListener, View.OnClickListener {
         }
     }
 
+    /** 服务器中心「加入」：以当前版本启动，并把 host:port 作为本次启动的服务器地址 */
+    fun launchVersionWithServer(serverAddress: String) {
+        launchVersion(Profiles.getSelectedVersion(), serverAddress)
+    }
+
     /**
      * 启动指定版本（null 表示当前选中版本，与启动按钮一致）；
      * 控制器未初始化时提示并晃动启动按钮
+     *
+     * @param serverAddress 服务器中心直连地址（host:port），仅本次启动生效，不写回版本设置
      */
-    private fun launchVersion(versionId: String?) {
+    private fun launchVersion(versionId: String?, serverAddress: String? = null) {
+        launchServerAddress = serverAddress
         if (!Controllers.isInitialized()) {
             binding.title.setTextWithAnim(getString(R.string.message_loading_controllers))
             AnimUtil.playTranslationX(binding.start, 700, 0f, 50f, -50f, 50f, -50f, 0f)
@@ -881,7 +901,12 @@ class MainActivity : FCLActivity(), OnSelectListener, View.OnClickListener {
     }
 
     private fun doLaunchVersion(profile: Profile, versionId: String?) {
-        Versions.launch(this, profile, versionId)
+        // 服务器中心的直连地址只对本次启动有效，取走后立即清空
+        val serverAddress = launchServerAddress
+        launchServerAddress = null
+        Versions.launch(this, profile, versionId) { launcherHelper ->
+            if (serverAddress != null) launcherHelper.setServerAddress(serverAddress)
+        }
     }
 
     private fun setupAccountDisplay() {
@@ -1071,7 +1096,7 @@ class MainActivity : FCLActivity(), OnSelectListener, View.OnClickListener {
                 objectAnimator.interpolator(BounceInterpolator()).startAfter((index + 1) * 100L)
             }
             AnimUtil.playTranslationY(
-                listOf(home, manage, download, controller, multiplayer, setting, back),
+                listOf(home, manage, download, controller, multiplayer, serverHub, setting, back),
                 speed * 100L,
                 -300f,
                 0f
@@ -1079,7 +1104,7 @@ class MainActivity : FCLActivity(), OnSelectListener, View.OnClickListener {
                 objectAnimator.interpolator(BounceInterpolator()).startAfter((index + 1) * 100L)
             }
             AnimUtil.playTranslationX(
-                listOf(home, manage, download, controller, multiplayer, setting, back),
+                listOf(home, manage, download, controller, multiplayer, serverHub, setting, back),
                 speed * 100L,
                 -100f,
                 0f
