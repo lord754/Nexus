@@ -42,11 +42,12 @@
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
                     android:orientation="horizontal">
-                    
+
                     <com.tungsten.fcllibrary.component.view.FCLTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/archive_name"
+                        android:textColor="#FFFFFF"
                         android:singleLine="true"
                         android:layout_gravity="center"
                         app:auto_text_tint="true"/>
@@ -64,7 +65,7 @@
                         android:singleLine="true"
                         android:id="@+id/name"
                         app:auto_edit_tint="true"/>
-                    
+
                 </com.tungsten.fcllibrary.component.view.FCLLinearLayout>
 
                 <View
@@ -85,6 +86,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/modpack_name"
+                        android:textColor="#FFFFFF"
                         android:singleLine="true"
                         android:layout_gravity="center"
                         app:auto_text_tint="true"/>
@@ -98,6 +100,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/modpack_name"
+                        android:textColor="#FFFFFF"
                         android:singleLine="true"
                         android:layout_gravity="center"
                         app:auto_text_tint="true"/>
@@ -122,6 +125,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/archive_version"
+                        android:textColor="#FFFFFF"
                         android:singleLine="true"
                         android:layout_gravity="center"
                         app:auto_text_tint="true"/>
@@ -135,6 +139,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/version"
+                        android:textColor="#FFFFFF"
                         android:singleLine="true"
                         android:layout_gravity="center"
                         app:auto_text_tint="true"/>
@@ -159,6 +164,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/archive_author"
+                        android:textColor="#FFFFFF"
                         android:singleLine="true"
                         android:layout_gravity="center"
                         app:auto_text_tint="true"/>
@@ -172,6 +178,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/author"
+                        android:textColor="#FFFFFF"
                         android:singleLine="true"
                         android:layout_gravity="center"
                         app:auto_text_tint="true"/>
@@ -194,6 +201,7 @@
             app:ripple="true"
             android:id="@+id/install"
             android:layout_marginTop="10dp"
+            android:layout_marginBottom="80dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/button_install"/>
